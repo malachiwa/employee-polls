@@ -10,6 +10,7 @@ import Login from "./Login";
 import { checkIfObjectIsEmpty } from "../helpers";
 import LeaderBoard from "./LeaderBoard";
 import NotFound from "./NotFound";
+import React from "react";
 
 const App = (props) => {
 	useEffect(() => {

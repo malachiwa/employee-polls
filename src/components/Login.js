@@ -1,6 +1,7 @@
 import { connect } from "react-redux";
 import { useState, useEffect } from "react";
 import { setAuthedUser } from "../actions/authedUser";
+import React from "react";
 
 const Login = ({ dispatch, users }) => {
 	const [name, setName] = useState("");
