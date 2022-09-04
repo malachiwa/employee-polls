@@ -1,18 +1,10 @@
 import { connect } from "react-redux";
 import { useState, useEffect } from "react";
 import { setAuthedUser } from "../actions/authedUser";
-import { useNavigate } from "react-router-dom";
-
 
 const Login = ({ dispatch, users }) => {
 	const [name, setName] = useState("");
 	const [password, setPassword] = useState("");
-
-	const navigate = useNavigate();
-
-	useEffect(() => {
-		navigate("/");
-	}, [navigate]);
 
 	const handleNameChange = (e) => {
 		const text = e.target.value;

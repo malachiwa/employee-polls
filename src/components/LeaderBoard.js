@@ -3,15 +3,16 @@ import { connect } from "react-redux";
 const LeaderBoard = (props) => {
 	let sortableUsers = [];
 	for (const user in props.users) {
-		sortableUsers.push([
-			props.users[user].name,
-			Object.keys(props.users[user].answers).length,
-			props.users[user].questions.length,
-		]);
+		sortableUsers.push({
+			name: props.users[user].name,
+			answers: Object.keys(props.users[user].answers).length,
+			questions: props.users[user].questions.length,
+			imgUrl: props.users[user].avatarURL,
+		});
 	}
 	sortableUsers.sort(function (a, b) {
-		const currB = b[1] + b[2];
-		const currA = a[1] + a[2];
+		const currB = b.answers + b.questions;
+		const currA = a.answers + a.questions;
 		return currB - currA;
 	});
 
@@ -29,10 +30,22 @@ const LeaderBoard = (props) => {
 				<tbody>
 					{sortableUsers.map((user) => {
 						return (
-							<tr key={user[0]}>
-								<td>{user[0]}</td>
-								<td>{user[1]}</td>
-								<td>{user[2]}</td>
+							<tr key={user.name}>
+								<td>
+									<div>
+										<p>{user.name}</p>
+										<img
+											src={`${process.env.PUBLIC_URL}/assets${user.imgUrl}`}
+											style={{
+												width: "100px",
+												height: "auto",
+											}}
+											alt={user.name}
+										/>
+									</div>
+								</td>
+								<td>{user.answers}</td>
+								<td>{user.questions}</td>
 							</tr>
 						);
 					})}

@@ -9,6 +9,7 @@ import Question from "./Question";
 import Login from "./Login";
 import { checkIfObjectIsEmpty } from "../helpers";
 import LeaderBoard from "./LeaderBoard";
+import NotFound from "./NotFound";
 
 const App = (props) => {
 	useEffect(() => {
@@ -25,10 +26,14 @@ const App = (props) => {
 						<Route path="/add" exact element={<NewQuestion />} />
 						<Route path="/questions/:id" element={<Question />} />
 						<Route path="/leaderboard" element={<LeaderBoard />} />
+						<Route path="/404" element={<NotFound />} />
+						<Route path="*" element={<NotFound />} />
 					</Routes>
 				</span>
 			) : (
-				<Login />
+				<Routes>
+					<Route path="*" exact element={<Login />} />
+				</Routes>
 			)}
 		</>
 	);

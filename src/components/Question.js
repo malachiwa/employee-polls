@@ -1,14 +1,32 @@
 import { connect } from "react-redux";
 import { withRouter } from "../helpers";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+
 import { handleAddAnswer } from "../actions/questions";
 import Answer from "./Answer";
 
 const Question = (props) => {
+	console.log("q props: ", props.question);
+
 	const navigate = useNavigate();
 
-	const votesOne = props.question.optionOne.votes;
-	const votesTwo = props.question.optionTwo.votes;
+	let votesOne, votesTwo;
+
+	useEffect(() => {
+		if (!props.question) {
+			console.log("not found");
+			navigate("/404");
+		} else {
+			console.log("found!");
+			console.log(props.question);
+		}
+	}, [navigate]);
+
+	if (props.question) {
+		votesOne = props.question.optionOne.votes;
+		votesTwo = props.question.optionTwo.votes;
+	}
 
 	if (props.question === null) {
 		return <p>Question doesn't exist</p>;
@@ -32,14 +50,19 @@ const Question = (props) => {
 		e.preventDefault();
 		props.dispatch(handleAddAnswer(props.id, e.target.value));
 		console.log(e.target.value);
-		navigate("/");
 	};
 	return (
 		<>
+			<h2>Poll by {props.question.author}</h2>
+			<img
+				src={`${process.env.PUBLIC_URL}/assets${
+					props.users[props.question.author].avatarURL
+				}`}
+				style={{ width: "100px", height: "auto" }}
+				alt={props.question.author}
+			/>
 			{!isAnswered() ? (
 				<div>
-					<h2>Poll by {props.question.author}</h2>
-					<img src={require(`${window.location.origin}${props.users[props.question.author].avatarURL}`).default} style={{width:'100px',height:'auto' }}/>
 					Would You Rather
 					<button value="optionOne" onClick={handleSubmit}>
 						{props.question.optionOne.text}
